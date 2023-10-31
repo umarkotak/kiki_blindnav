@@ -2,7 +2,7 @@
 
 // import dynamic from 'next/dynamic'
 import { useState, useEffect, useRef } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, useMapEvent } from 'react-leaflet';
 // const { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } = dynamic(() => import('react-leaflet'), {ssr: false})
 
 export default function HomeMap() {
@@ -76,13 +76,13 @@ export default function HomeMap() {
 
    function SetViewOnClick({ animateRef }) {
 
-    const map = useMapEvents('click', (e) => {
+    const map = useMapEvent('click', (e) => {
+      console.log("CLICKED", e.latlng)
       map.setView(e.latlng, map.getZoom(), {
         animate: animateRef.current || false,
       })
     })
 
-    console.log("CLICKED")
     return null
   }
 
@@ -102,7 +102,7 @@ export default function HomeMap() {
                 </Popup>
               </Marker>
             ))}
-            {/* <MyClickEvents /> */}
+            <MyClickEvents />
             <RecenterAutomatically center={currentLocation} />
             <SetViewOnClick animateRef={animateRef} />
           </MapContainer>}
